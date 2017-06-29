@@ -23,9 +23,20 @@ const convertCurrency = (from, to, amount) => {
     });
 };
 
-convertCurrency('USD', 'CAD', 100).then((status) => {
+const convertCurrencyAlt = async (from, to, amount) => {
+    const countries = await getCountries(to);
+    const rate = await getExchangeRate(from, to);
+    const exchangedAmount = amount * rate;
+    return `${amount} ${from} is worth ${exchangedAmount} ${to}. ${to} can be used in the following countries:${countries.join(', ')}`
+};
+
+convertCurrencyAlt('CAD', 'USD', 100).then((status) => {
     console.log(status);
 })
+
+// convertCurrency('USD', 'CAD', 100).then((status) => {
+//     console.log(status);
+// });
 
 // getCountries('CAD').then((countries) => {
 //     console.log(countries);
